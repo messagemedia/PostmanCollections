@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "ada530c7-3db6-4296-b6e8-9b9d7d00a27d",
+		"name": "Lookups",
+		"description": "*Know your recipients.*\n\nValidate the phone numbers you’re sending to by checking their validity, type and carrier records. Reduce the number of failed or undeliverable messages sent. Enrich your existing data.\n\nPlease note: This API is currently only available for Australian, US and Canadian phone numbers. Lookups may carry an additional charge. For pricing, please contact your Account Manager or Support Team (support@messagemedia.com)\n\n![Lookups](https://developers.messagemedia.com/wp-content/uploads/2017/11/lookups-api.png)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Lookups",
+			"item": [
+				{
+					"name": "Lookup a phone number",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.messagemedia.com/v1/lookups/phone/:phone_number?options=carrier%2Ctype",
+							"protocol": "https",
+							"host": [
+								"api",
+								"messagemedia",
+								"com"
+							],
+							"path": [
+								"v1",
+								"lookups",
+								"phone",
+								":phone_number"
+							],
+							"query": [
+								{
+									"key": "options",
+									"value": "carrier%2Ctype"
+								}
+							],
+							"variable": [
+								{
+									"key": "phone_number",
+									"value": "+61491570156"
+								}
+							]
+						},
+						"description": "Use the Lookups API to find information about a phone number.\nA request to the lookups API has the following format:\n```/v1/lookups/phone/{phone_number}?options={x}```\nwhere `{x}` is an individual value or a combination of values. \nThe `{phone_number}` parameter is a required field and should be set to the phone number to be looked up.\nThe options query parameter can also be used to request additional information about the phone number.\nBy default, a request will only return the `country_code` and `phone_number` properties in the response.\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n}\n```\nTo request details about the the carrier, include `carrier` as a value of the options parameter and to \nrequest details about the type, include `type` as a value of the options parameter. The `carrier` and\nand the `type` values can be used together using a comma separated list, i.e. `carrier,type`.\nTo request details about the location, include `hlr` as a value of the options parameter. \nNOTE: The `hlr` value CANNOT be used in conjuction with the other values.\nA successful request to the lookups endpoint with `carrier` and `type` as values will return a response body as follows:\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n  \"type\": \"mobile\",\n  \"carrier\": {\n    \"name\": \"Telstra\"\n  }\n}\n```\nA successful request to the lookups endpoint with `hlr` as the value will return a response body as follows:\n```json\n{\n    \"result\": \"OK\",\n    \"imsi\": 24008,\n    \"location\": 46\n}\n```\nEach property in the response body is defined as follows:\n- ```country_code``` ISO ALPHA 2 country code of the phone number\n- ```phone_number``` E.164 formatted phone number\n- ```type``` The type of number. This can be ```\"mobile\"``` or ```\"landline\"```\n- ```carrier``` Holds information about the specific carrier (if available)\n  - ```name``` The carrier's name as reported by the network\n- `imsi` A unique number identifying a GSM subscriber\n- `location` The location of the mobile number"
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/lookups/phone/:phone_number?options=carrier%2Ctype",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"lookups",
+										"phone",
+										":phone_number"
+									],
+									"query": [
+										{
+											"key": "options",
+											"value": "carrier%2Ctype"
+										}
+									],
+									"variable": [
+										{
+											"key": "phone_number",
+											"value": "+61491570156"
+										}
+									]
+								},
+								"description": "Use the Lookups API to find information about a phone number.\nA request to the lookups API has the following format:\n```/v1/lookups/phone/{phone_number}?options={x}```\nwhere `{x}` is an individual value or a combination of values. \nThe `{phone_number}` parameter is a required field and should be set to the phone number to be looked up.\nThe options query parameter can also be used to request additional information about the phone number.\nBy default, a request will only return the `country_code` and `phone_number` properties in the response.\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n}\n```\nTo request details about the the carrier, include `carrier` as a value of the options parameter and to \nrequest details about the type, include `type` as a value of the options parameter. The `carrier` and\nand the `type` values can be used together using a comma separated list, i.e. `carrier,type`.\nTo request details about the location, include `hlr` as a value of the options parameter. \nNOTE: The `hlr` value CANNOT be used in conjuction with the other values.\nA successful request to the lookups endpoint with `carrier` and `type` as values will return a response body as follows:\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n  \"type\": \"mobile\",\n  \"carrier\": {\n    \"name\": \"Telstra\"\n  }\n}\n```\nA successful request to the lookups endpoint with `hlr` as the value will return a response body as follows:\n```json\n{\n    \"result\": \"OK\",\n    \"imsi\": 24008,\n    \"location\": 46\n}\n```\nEach property in the response body is defined as follows:\n- ```country_code``` ISO ALPHA 2 country code of the phone number\n- ```phone_number``` E.164 formatted phone number\n- ```type``` The type of number. This can be ```\"mobile\"``` or ```\"landline\"```\n- ```carrier``` Holds information about the specific carrier (if available)\n  - ```name``` The carrier's name as reported by the network\n- `imsi` A unique number identifying a GSM subscriber\n- `location` The location of the mobile number"
+							},
+							"status": "Number was looked up successfully",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"country_code\": \"AU\",\r\n  \"phone_number\": \"+61491570156\",\r\n  \"type\": \"mobile\",\r\n  \"carrier\": {\r\n    \"name\": \"Telstra\"\r\n  }\r\n}"
+						},
+						{
+							"name": "Response_404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/lookups/phone/:phone_number?options=carrier%2Ctype",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"lookups",
+										"phone",
+										":phone_number"
+									],
+									"query": [
+										{
+											"key": "options",
+											"value": "carrier%2Ctype"
+										}
+									],
+									"variable": [
+										{
+											"key": "phone_number",
+											"value": "+61491570156"
+										}
+									]
+								},
+								"description": "Use the Lookups API to find information about a phone number.\nA request to the lookups API has the following format:\n```/v1/lookups/phone/{phone_number}?options={x}```\nwhere `{x}` is an individual value or a combination of values. \nThe `{phone_number}` parameter is a required field and should be set to the phone number to be looked up.\nThe options query parameter can also be used to request additional information about the phone number.\nBy default, a request will only return the `country_code` and `phone_number` properties in the response.\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n}\n```\nTo request details about the the carrier, include `carrier` as a value of the options parameter and to \nrequest details about the type, include `type` as a value of the options parameter. The `carrier` and\nand the `type` values can be used together using a comma separated list, i.e. `carrier,type`.\nTo request details about the location, include `hlr` as a value of the options parameter. \nNOTE: The `hlr` value CANNOT be used in conjuction with the other values.\nA successful request to the lookups endpoint with `carrier` and `type` as values will return a response body as follows:\n```json\n{\n  \"country_code\": \"AU\",\n  \"phone_number\": \"+61491570156\",\n  \"type\": \"mobile\",\n  \"carrier\": {\n    \"name\": \"Telstra\"\n  }\n}\n```\nA successful request to the lookups endpoint with `hlr` as the value will return a response body as follows:\n```json\n{\n    \"result\": \"OK\",\n    \"imsi\": 24008,\n    \"location\": 46\n}\n```\nEach property in the response body is defined as follows:\n- ```country_code``` ISO ALPHA 2 country code of the phone number\n- ```phone_number``` E.164 formatted phone number\n- ```type``` The type of number. This can be ```\"mobile\"``` or ```\"landline\"```\n- ```carrier``` Holds information about the specific carrier (if available)\n  - ```name``` The carrier's name as reported by the network\n- `imsi` A unique number identifying a GSM subscriber\n- `location` The location of the mobile number"
+							},
+							"status": "Unexpected error in API call. See HTTP response body for details.",
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"message\": \"The number could not be found or is invalid.\"\r\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

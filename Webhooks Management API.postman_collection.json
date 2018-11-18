@@ -1,0 +1,648 @@
+{
+	"info": {
+		"_postman_id": "677aa461-ddc2-443e-b153-f6d60586267b",
+		"name": "Webhooks Management API",
+		"description": "Webhooks Management API allows you to manage your webhooks configuration. You can subscribe to one or several events, retrieve the webhooks, update them or even delete them if needed.\n\n![Webhooks Flow](http://i66.tinypic.com/2ufxf81.jpg)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Create Webhook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"url\": \"http://webhook.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"JSON\",\r\n  \"headers\": {\r\n    \"Account\": \"DeveloperPortal7000\"\r\n  },\r\n  \"events\": [\r\n    \"ENROUTE_DR\",\r\n    \"DELIVERED_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.messagemedia.com/v1/webhooks/messages",
+							"protocol": "https",
+							"host": [
+								"api",
+								"messagemedia",
+								"com"
+							],
+							"path": [
+								"v1",
+								"webhooks",
+								"messages"
+							]
+						},
+						"description": "Create a webhook for one or more of the specified events.\nA webhook would typically have the following structure:\n```\n{\n  \"url\": \"http://webhook.com\",\n  \"method\": \"POST\",\n  \"encoding\": \"JSON\",\n  \"headers\": {\n    \"Account\": \"DeveloperPortal7000\"\n  },\n  \"events\": [\n    \"RECEIVED_SMS\"\n  ],\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\nA valid webhook must consist of the following properties:\n- ```url``` The configured URL which will trigger the webhook when a selected event occurs.\n- ```method``` The methods to map CRUD (create, retrieve, update, delete) operations to HTTP requests.\n- ```encoding``` Webhooks can be delivered using different content types. You can choose from ```JSON```, ```FORM_ENCODED``` or ```XML```. This will automatically add the Content-Type header for you so you don't have to add it again in the `headers` property.\n- ```headers``` HTTP header fields which provide required information about the request or response, or about the object sent in the message body. This should NOT include the `Content-Type` header.\n- ```events``` Event or events that will trigger the webhook. Atleast one event should be present.\n- ```template``` The structure of the payload that will be returned. You can format this in JSON or XML.\n#### Types of Events\nYou can select all of the events (listed below) or combine them in whatever way you like but atleast one event must be used. Otherwise, the webhook won't be created.\nA webhook will be triggered when any one or more of the events occur:\n+ **SMS**\n    + `RECEIVED_SMS` Receive an SMS\n    + `OPT_OUT_SMS` Opt-out occured\n+ **MMS**\n    + `RECEIVED_MMS` Receive an MMS\n+ **DR (Delivery Reports)**\n    + `ENROUTE_DR` Message is enroute\n    + `EXPIRED_DR` Message has expired\n    + `REJECTED_DR` Message is rejected\n    + `FAILED_DR` Message has failed \n    + `DELIVERED_DR` Message is delivered\n    + `SUBMITTED_DR` Message is submitted\n#### Template Parameters\nYou can choose what to include in the data that will be sent as the payload via the Webhook. It's upto you to choose what format you would like the payload to be returned. You can choose between JSON or XML.\nKeep in my mind, if you've chosen JSON as the format, you must escape the JSON in the template value (see example above).\nThe table illustrates a list of all the parameters that can be included in the template and which event types it can be applied to.\n| Data  | Parameter Name | Example | Event Type |\n|:--|--|--|--|--|\n| **Service Type**  | $type| `SMS` | `DR` `MO` `MO MMS` |\n| **Message ID**  | $mtId, $messageId| `877c19ef-fa2e-4cec-827a-e1df9b5509f7` | `DR` `MO` `MO MMS`|\n| **Delivery Report ID** |$drId, $reportId| `01e1fa0a-6e27-4945-9cdb-18644b4de043` | `DR` |\n| **Reply ID**| $moId, $replyId| `a175e797-2b54-468b-9850-41a3eab32f74` | `MO` `MO MMS` |\n| **Account ID**  | $accountId| `DeveloperPortal7000` | `DR` `MO` `MO MMS` |\n| **Message Timestamp**  | $submittedTimestamp| `2016-12-07T08:43:00.850Z` | `DR` `MO` `MO MMS` |\n| **Provider Timestamp**  | $receivedTimestamp| `2016-12-07T08:44:00.850Z` | `DR` `MO` `MO MMS` |\n| **Message Status** | $status| `enroute` | `DR` |\n| **Status Code**  | $statusCode| `200` | `DR` |\n| **External Metadata** | $metadata.get('key')| `name` | `DR` `MO` `MO MMS` |\n| **Source Address**| $sourceAddress| `+61491570156` | `DR` `MO` `MO MMS` |\n| **Destination Address**| $destinationAddress| `+61491593156` | `MO` `MO MMS` |\n| **Message Content**| $mtContent, $messageContent| `Hi Derp` | `DR` `MO` `MO MMS` |\n| **Reply Content**| $moContent, $replyContent| `Hello Derpina` | `MO` `MO MMS` |\n| **Retry Count**| $retryCount| `1` | `DR` `MO` `MO MMS` |\n*Note: A 400 response will be returned if the `url` is invalid, the `events`, `encoding` or `method` is null or the `headers` has a Content-Type  attribute.*"
+					},
+					"response": [
+						{
+							"name": "Response_409",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"http://webhook.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"JSON\",\r\n  \"headers\": {\r\n    \"Account\": \"DeveloperPortal7000\"\r\n  },\r\n  \"events\": [\r\n    \"ENROUTE_DR\",\r\n    \"DELIVERED_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages"
+									]
+								},
+								"description": "Create a webhook for one or more of the specified events.\nA webhook would typically have the following structure:\n```\n{\n  \"url\": \"http://webhook.com\",\n  \"method\": \"POST\",\n  \"encoding\": \"JSON\",\n  \"headers\": {\n    \"Account\": \"DeveloperPortal7000\"\n  },\n  \"events\": [\n    \"RECEIVED_SMS\"\n  ],\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\nA valid webhook must consist of the following properties:\n- ```url``` The configured URL which will trigger the webhook when a selected event occurs.\n- ```method``` The methods to map CRUD (create, retrieve, update, delete) operations to HTTP requests.\n- ```encoding``` Webhooks can be delivered using different content types. You can choose from ```JSON```, ```FORM_ENCODED``` or ```XML```. This will automatically add the Content-Type header for you so you don't have to add it again in the `headers` property.\n- ```headers``` HTTP header fields which provide required information about the request or response, or about the object sent in the message body. This should NOT include the `Content-Type` header.\n- ```events``` Event or events that will trigger the webhook. Atleast one event should be present.\n- ```template``` The structure of the payload that will be returned. You can format this in JSON or XML.\n#### Types of Events\nYou can select all of the events (listed below) or combine them in whatever way you like but atleast one event must be used. Otherwise, the webhook won't be created.\nA webhook will be triggered when any one or more of the events occur:\n+ **SMS**\n    + `RECEIVED_SMS` Receive an SMS\n    + `OPT_OUT_SMS` Opt-out occured\n+ **MMS**\n    + `RECEIVED_MMS` Receive an MMS\n+ **DR (Delivery Reports)**\n    + `ENROUTE_DR` Message is enroute\n    + `EXPIRED_DR` Message has expired\n    + `REJECTED_DR` Message is rejected\n    + `FAILED_DR` Message has failed \n    + `DELIVERED_DR` Message is delivered\n    + `SUBMITTED_DR` Message is submitted\n#### Template Parameters\nYou can choose what to include in the data that will be sent as the payload via the Webhook. It's upto you to choose what format you would like the payload to be returned. You can choose between JSON or XML.\nKeep in my mind, if you've chosen JSON as the format, you must escape the JSON in the template value (see example above).\nThe table illustrates a list of all the parameters that can be included in the template and which event types it can be applied to.\n| Data  | Parameter Name | Example | Event Type |\n|:--|--|--|--|--|\n| **Service Type**  | $type| `SMS` | `DR` `MO` `MO MMS` |\n| **Message ID**  | $mtId, $messageId| `877c19ef-fa2e-4cec-827a-e1df9b5509f7` | `DR` `MO` `MO MMS`|\n| **Delivery Report ID** |$drId, $reportId| `01e1fa0a-6e27-4945-9cdb-18644b4de043` | `DR` |\n| **Reply ID**| $moId, $replyId| `a175e797-2b54-468b-9850-41a3eab32f74` | `MO` `MO MMS` |\n| **Account ID**  | $accountId| `DeveloperPortal7000` | `DR` `MO` `MO MMS` |\n| **Message Timestamp**  | $submittedTimestamp| `2016-12-07T08:43:00.850Z` | `DR` `MO` `MO MMS` |\n| **Provider Timestamp**  | $receivedTimestamp| `2016-12-07T08:44:00.850Z` | `DR` `MO` `MO MMS` |\n| **Message Status** | $status| `enroute` | `DR` |\n| **Status Code**  | $statusCode| `200` | `DR` |\n| **External Metadata** | $metadata.get('key')| `name` | `DR` `MO` `MO MMS` |\n| **Source Address**| $sourceAddress| `+61491570156` | `DR` `MO` `MO MMS` |\n| **Destination Address**| $destinationAddress| `+61491593156` | `MO` `MO MMS` |\n| **Message Content**| $mtContent, $messageContent| `Hi Derp` | `DR` `MO` `MO MMS` |\n| **Reply Content**| $moContent, $replyContent| `Hello Derpina` | `MO` `MO MMS` |\n| **Retry Count**| $retryCount| `1` | `DR` `MO` `MO MMS` |\n*Note: A 400 response will be returned if the `url` is invalid, the `events`, `encoding` or `method` is null or the `headers` has a Content-Type  attribute.*"
+							},
+							"status": "Unexpected error in API call. See HTTP response body for details.",
+							"code": 409,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"message\": \"A webhook with the given url and method already exists.\"\r\n}"
+						},
+						{
+							"name": "Response_400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"http://webhook.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"JSON\",\r\n  \"headers\": {\r\n    \"Account\": \"DeveloperPortal7000\"\r\n  },\r\n  \"events\": [\r\n    \"ENROUTE_DR\",\r\n    \"DELIVERED_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages"
+									]
+								},
+								"description": "Create a webhook for one or more of the specified events.\nA webhook would typically have the following structure:\n```\n{\n  \"url\": \"http://webhook.com\",\n  \"method\": \"POST\",\n  \"encoding\": \"JSON\",\n  \"headers\": {\n    \"Account\": \"DeveloperPortal7000\"\n  },\n  \"events\": [\n    \"RECEIVED_SMS\"\n  ],\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\nA valid webhook must consist of the following properties:\n- ```url``` The configured URL which will trigger the webhook when a selected event occurs.\n- ```method``` The methods to map CRUD (create, retrieve, update, delete) operations to HTTP requests.\n- ```encoding``` Webhooks can be delivered using different content types. You can choose from ```JSON```, ```FORM_ENCODED``` or ```XML```. This will automatically add the Content-Type header for you so you don't have to add it again in the `headers` property.\n- ```headers``` HTTP header fields which provide required information about the request or response, or about the object sent in the message body. This should NOT include the `Content-Type` header.\n- ```events``` Event or events that will trigger the webhook. Atleast one event should be present.\n- ```template``` The structure of the payload that will be returned. You can format this in JSON or XML.\n#### Types of Events\nYou can select all of the events (listed below) or combine them in whatever way you like but atleast one event must be used. Otherwise, the webhook won't be created.\nA webhook will be triggered when any one or more of the events occur:\n+ **SMS**\n    + `RECEIVED_SMS` Receive an SMS\n    + `OPT_OUT_SMS` Opt-out occured\n+ **MMS**\n    + `RECEIVED_MMS` Receive an MMS\n+ **DR (Delivery Reports)**\n    + `ENROUTE_DR` Message is enroute\n    + `EXPIRED_DR` Message has expired\n    + `REJECTED_DR` Message is rejected\n    + `FAILED_DR` Message has failed \n    + `DELIVERED_DR` Message is delivered\n    + `SUBMITTED_DR` Message is submitted\n#### Template Parameters\nYou can choose what to include in the data that will be sent as the payload via the Webhook. It's upto you to choose what format you would like the payload to be returned. You can choose between JSON or XML.\nKeep in my mind, if you've chosen JSON as the format, you must escape the JSON in the template value (see example above).\nThe table illustrates a list of all the parameters that can be included in the template and which event types it can be applied to.\n| Data  | Parameter Name | Example | Event Type |\n|:--|--|--|--|--|\n| **Service Type**  | $type| `SMS` | `DR` `MO` `MO MMS` |\n| **Message ID**  | $mtId, $messageId| `877c19ef-fa2e-4cec-827a-e1df9b5509f7` | `DR` `MO` `MO MMS`|\n| **Delivery Report ID** |$drId, $reportId| `01e1fa0a-6e27-4945-9cdb-18644b4de043` | `DR` |\n| **Reply ID**| $moId, $replyId| `a175e797-2b54-468b-9850-41a3eab32f74` | `MO` `MO MMS` |\n| **Account ID**  | $accountId| `DeveloperPortal7000` | `DR` `MO` `MO MMS` |\n| **Message Timestamp**  | $submittedTimestamp| `2016-12-07T08:43:00.850Z` | `DR` `MO` `MO MMS` |\n| **Provider Timestamp**  | $receivedTimestamp| `2016-12-07T08:44:00.850Z` | `DR` `MO` `MO MMS` |\n| **Message Status** | $status| `enroute` | `DR` |\n| **Status Code**  | $statusCode| `200` | `DR` |\n| **External Metadata** | $metadata.get('key')| `name` | `DR` `MO` `MO MMS` |\n| **Source Address**| $sourceAddress| `+61491570156` | `DR` `MO` `MO MMS` |\n| **Destination Address**| $destinationAddress| `+61491593156` | `MO` `MO MMS` |\n| **Message Content**| $mtContent, $messageContent| `Hi Derp` | `DR` `MO` `MO MMS` |\n| **Reply Content**| $moContent, $replyContent| `Hello Derpina` | `MO` `MO MMS` |\n| **Retry Count**| $retryCount| `1` | `DR` `MO` `MO MMS` |\n*Note: A 400 response will be returned if the `url` is invalid, the `events`, `encoding` or `method` is null or the `headers` has a Content-Type  attribute.*"
+							},
+							"status": "Unexpected error in API call. See HTTP response body for details.",
+							"code": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"message\": \"Something went wrong. Please try again later.\"\r\n}"
+						},
+						{
+							"name": "Response_201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"http://webhook.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"JSON\",\r\n  \"headers\": {\r\n    \"Account\": \"DeveloperPortal7000\"\r\n  },\r\n  \"events\": [\r\n    \"ENROUTE_DR\",\r\n    \"DELIVERED_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages"
+									]
+								},
+								"description": "Create a webhook for one or more of the specified events.\nA webhook would typically have the following structure:\n```\n{\n  \"url\": \"http://webhook.com\",\n  \"method\": \"POST\",\n  \"encoding\": \"JSON\",\n  \"headers\": {\n    \"Account\": \"DeveloperPortal7000\"\n  },\n  \"events\": [\n    \"RECEIVED_SMS\"\n  ],\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\",\\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\nA valid webhook must consist of the following properties:\n- ```url``` The configured URL which will trigger the webhook when a selected event occurs.\n- ```method``` The methods to map CRUD (create, retrieve, update, delete) operations to HTTP requests.\n- ```encoding``` Webhooks can be delivered using different content types. You can choose from ```JSON```, ```FORM_ENCODED``` or ```XML```. This will automatically add the Content-Type header for you so you don't have to add it again in the `headers` property.\n- ```headers``` HTTP header fields which provide required information about the request or response, or about the object sent in the message body. This should NOT include the `Content-Type` header.\n- ```events``` Event or events that will trigger the webhook. Atleast one event should be present.\n- ```template``` The structure of the payload that will be returned. You can format this in JSON or XML.\n#### Types of Events\nYou can select all of the events (listed below) or combine them in whatever way you like but atleast one event must be used. Otherwise, the webhook won't be created.\nA webhook will be triggered when any one or more of the events occur:\n+ **SMS**\n    + `RECEIVED_SMS` Receive an SMS\n    + `OPT_OUT_SMS` Opt-out occured\n+ **MMS**\n    + `RECEIVED_MMS` Receive an MMS\n+ **DR (Delivery Reports)**\n    + `ENROUTE_DR` Message is enroute\n    + `EXPIRED_DR` Message has expired\n    + `REJECTED_DR` Message is rejected\n    + `FAILED_DR` Message has failed \n    + `DELIVERED_DR` Message is delivered\n    + `SUBMITTED_DR` Message is submitted\n#### Template Parameters\nYou can choose what to include in the data that will be sent as the payload via the Webhook. It's upto you to choose what format you would like the payload to be returned. You can choose between JSON or XML.\nKeep in my mind, if you've chosen JSON as the format, you must escape the JSON in the template value (see example above).\nThe table illustrates a list of all the parameters that can be included in the template and which event types it can be applied to.\n| Data  | Parameter Name | Example | Event Type |\n|:--|--|--|--|--|\n| **Service Type**  | $type| `SMS` | `DR` `MO` `MO MMS` |\n| **Message ID**  | $mtId, $messageId| `877c19ef-fa2e-4cec-827a-e1df9b5509f7` | `DR` `MO` `MO MMS`|\n| **Delivery Report ID** |$drId, $reportId| `01e1fa0a-6e27-4945-9cdb-18644b4de043` | `DR` |\n| **Reply ID**| $moId, $replyId| `a175e797-2b54-468b-9850-41a3eab32f74` | `MO` `MO MMS` |\n| **Account ID**  | $accountId| `DeveloperPortal7000` | `DR` `MO` `MO MMS` |\n| **Message Timestamp**  | $submittedTimestamp| `2016-12-07T08:43:00.850Z` | `DR` `MO` `MO MMS` |\n| **Provider Timestamp**  | $receivedTimestamp| `2016-12-07T08:44:00.850Z` | `DR` `MO` `MO MMS` |\n| **Message Status** | $status| `enroute` | `DR` |\n| **Status Code**  | $statusCode| `200` | `DR` |\n| **External Metadata** | $metadata.get('key')| `name` | `DR` `MO` `MO MMS` |\n| **Source Address**| $sourceAddress| `+61491570156` | `DR` `MO` `MO MMS` |\n| **Destination Address**| $destinationAddress| `+61491593156` | `MO` `MO MMS` |\n| **Message Content**| $mtContent, $messageContent| `Hi Derp` | `DR` `MO` `MO MMS` |\n| **Reply Content**| $moContent, $replyContent| `Hello Derpina` | `MO` `MO MMS` |\n| **Retry Count**| $retryCount| `1` | `DR` `MO` `MO MMS` |\n*Note: A 400 response will be returned if the `url` is invalid, the `events`, `encoding` or `method` is null or the `headers` has a Content-Type  attribute.*"
+							},
+							"status": "Webhook successfully created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Retrieve Webhook",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.messagemedia.com/v1/webhooks/messages/?page=%270%27&pageSize=%2710%27",
+							"protocol": "https",
+							"host": [
+								"api",
+								"messagemedia",
+								"com"
+							],
+							"path": [
+								"v1",
+								"webhooks",
+								"messages",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "%270%27"
+								},
+								{
+									"key": "pageSize",
+									"value": "%2710%27"
+								}
+							]
+						},
+						"description": "Retrieve all the webhooks created for the connected account.\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"page\": 0,\n    \"pageSize\": 100,\n    \"pageData\": [\n        {\n            \"url\": \"https://webhook.com\",\n            \"method\": \"POST\",\n            \"id\": \"8805c9d8-bef7-41c7-906a-69ede93aa024\",\n            \"encoding\": \"JSON\",\n            \"events\": [\n                \"RECEIVED_SMS\"\n            ],\n            \"headers\": {},\n            \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n        }\n    ]\n}\n```\n*Note: Response 400 is returned when the `page` query parameter is not valid or the `pageSize` query parameter is not valid.*"
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/?page=%270%27&pageSize=%2710%27",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "%270%27"
+										},
+										{
+											"key": "pageSize",
+											"value": "%2710%27"
+										}
+									]
+								},
+								"description": "Retrieve all the webhooks created for the connected account.\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"page\": 0,\n    \"pageSize\": 100,\n    \"pageData\": [\n        {\n            \"url\": \"https://webhook.com\",\n            \"method\": \"POST\",\n            \"id\": \"8805c9d8-bef7-41c7-906a-69ede93aa024\",\n            \"encoding\": \"JSON\",\n            \"events\": [\n                \"RECEIVED_SMS\"\n            ],\n            \"headers\": {},\n            \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n        }\n    ]\n}\n```\n*Note: Response 400 is returned when the `page` query parameter is not valid or the `pageSize` query parameter is not valid.*"
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Response_400",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/?page=%270%27&pageSize=%2710%27",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "%270%27"
+										},
+										{
+											"key": "pageSize",
+											"value": "%2710%27"
+										}
+									]
+								},
+								"description": "Retrieve all the webhooks created for the connected account.\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"page\": 0,\n    \"pageSize\": 100,\n    \"pageData\": [\n        {\n            \"url\": \"https://webhook.com\",\n            \"method\": \"POST\",\n            \"id\": \"8805c9d8-bef7-41c7-906a-69ede93aa024\",\n            \"encoding\": \"JSON\",\n            \"events\": [\n                \"RECEIVED_SMS\"\n            ],\n            \"headers\": {},\n            \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n        }\n    ]\n}\n```\n*Note: Response 400 is returned when the `page` query parameter is not valid or the `pageSize` query parameter is not valid.*"
+							},
+							"status": "Unexpected error in API call. See HTTP response body for details.",
+							"code": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"message\": \"Something went wrong. Please try again later.\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Webhook",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"messagemedia",
+								"com"
+							],
+							"path": [
+								"v1",
+								"webhooks",
+								"messages",
+								":webhookId"
+							],
+							"variable": [
+								{
+									"key": "webhookId",
+									"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+								}
+							]
+						},
+						"description": "Delete a webhook that was previously created for the connected account.\nA webhook can be cancelled by appending the UUID of the webhook to the endpoint and submitting a DELETE request to the /webhooks/messages endpoint.\nA successful request to the retrieve webhook endpoint will return a null response.\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+					},
+					"response": [
+						{
+							"name": "Response_404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										":webhookId"
+									],
+									"variable": [
+										{
+											"key": "webhookId",
+											"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+										}
+									]
+								},
+								"description": "Delete a webhook that was previously created for the connected account.\nA webhook can be cancelled by appending the UUID of the webhook to the endpoint and submitting a DELETE request to the /webhooks/messages endpoint.\nA successful request to the retrieve webhook endpoint will return a null response.\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+							},
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Response_204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										":webhookId"
+									],
+									"variable": [
+										{
+											"key": "webhookId",
+											"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+										}
+									]
+								},
+								"description": "Delete a webhook that was previously created for the connected account.\nA webhook can be cancelled by appending the UUID of the webhook to the endpoint and submitting a DELETE request to the /webhooks/messages endpoint.\nA successful request to the retrieve webhook endpoint will return a null response.\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+							},
+							"status": "Webhook deleted successfully",
+							"code": 204,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update Webhook",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"url\": \"https://myurl.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"FORM_ENCODED\",\r\n  \"events\": [\r\n    \"ENROUTE_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+							"protocol": "https",
+							"host": [
+								"api",
+								"messagemedia",
+								"com"
+							],
+							"path": [
+								"v1",
+								"webhooks",
+								"messages",
+								":webhookId"
+							],
+							"variable": [
+								{
+									"key": "webhookId",
+									"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+								}
+							]
+						},
+						"description": "Update a webhook. You can update individual attributes or all of them by submitting a PATCH request to the /webhooks/messages endpoint (the same endpoint used above to delete a webhook)\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"url\": \"https://webhook.com\",\n    \"method\": \"POST\",\n    \"id\": \"04442623-0961-464e-9cbc-ec50804e0413\",\n    \"encoding\": \"JSON\",\n    \"events\": [\n        \"RECEIVED_SMS\"\n    ],\n    \"headers\": {},\n    \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"https://myurl.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"FORM_ENCODED\",\r\n  \"events\": [\r\n    \"ENROUTE_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										":webhookId"
+									],
+									"variable": [
+										{
+											"key": "webhookId",
+											"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+										}
+									]
+								},
+								"description": "Update a webhook. You can update individual attributes or all of them by submitting a PATCH request to the /webhooks/messages endpoint (the same endpoint used above to delete a webhook)\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"url\": \"https://webhook.com\",\n    \"method\": \"POST\",\n    \"id\": \"04442623-0961-464e-9cbc-ec50804e0413\",\n    \"encoding\": \"JSON\",\n    \"events\": [\n        \"RECEIVED_SMS\"\n    ],\n    \"headers\": {},\n    \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+							},
+							"status": "Webhook updated successfully",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Response_400",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"https://myurl.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"FORM_ENCODED\",\r\n  \"events\": [\r\n    \"ENROUTE_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										":webhookId"
+									],
+									"variable": [
+										{
+											"key": "webhookId",
+											"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+										}
+									]
+								},
+								"description": "Update a webhook. You can update individual attributes or all of them by submitting a PATCH request to the /webhooks/messages endpoint (the same endpoint used above to delete a webhook)\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"url\": \"https://webhook.com\",\n    \"method\": \"POST\",\n    \"id\": \"04442623-0961-464e-9cbc-ec50804e0413\",\n    \"encoding\": \"JSON\",\n    \"events\": [\n        \"RECEIVED_SMS\"\n    ],\n    \"headers\": {},\n    \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+							},
+							"status": "Unexpected error in API call. See HTTP response body for details.",
+							"code": 400,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"message\": \"Something went wrong. Please try again later.\"\r\n}"
+						},
+						{
+							"name": "Response_404",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"https://myurl.com\",\r\n  \"method\": \"POST\",\r\n  \"encoding\": \"FORM_ENCODED\",\r\n  \"events\": [\r\n    \"ENROUTE_DR\"\r\n  ],\r\n  \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\r\n}"
+								},
+								"url": {
+									"raw": "https://api.messagemedia.com/v1/webhooks/messages/:webhookId",
+									"protocol": "https",
+									"host": [
+										"api",
+										"messagemedia",
+										"com"
+									],
+									"path": [
+										"v1",
+										"webhooks",
+										"messages",
+										":webhookId"
+									],
+									"variable": [
+										{
+											"key": "webhookId",
+											"value": "a7f11bb0-f299-4861-a5ca-9b29d04bc5ad"
+										}
+									]
+								},
+								"description": "Update a webhook. You can update individual attributes or all of them by submitting a PATCH request to the /webhooks/messages endpoint (the same endpoint used above to delete a webhook)\nA successful request to the retrieve webhook endpoint will return a response body as follows:\n```\n{\n    \"url\": \"https://webhook.com\",\n    \"method\": \"POST\",\n    \"id\": \"04442623-0961-464e-9cbc-ec50804e0413\",\n    \"encoding\": \"JSON\",\n    \"events\": [\n        \"RECEIVED_SMS\"\n    ],\n    \"headers\": {},\n    \"template\": \"{\\\"id\\\":\\\"$mtId\\\", \\\"status\\\":\\\"$statusCode\\\"}\"\n}\n```\n*Note: Only pre-created webhooks can be deleted. If an invalid or non existent webhook ID parameter is specified in the request, then a HTTP 404 Not Found response will be returned.*"
+							},
+							"code": 404,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	]
+}

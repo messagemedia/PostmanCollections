@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "63a0cca0-83a8-4fb3-a8fa-12d6273a24b5",
+		"name": "Conversations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Provision account",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\"\t:\"Facebook1\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/provision",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"provision"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get facebook auth url",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/facebook/authorise",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"facebook",
+						"authorise"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get facebook pages",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/facebook/pages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"facebook",
+						"pages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Integrate facebook page",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/facebook/pages/1573307926039629/integrate",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"facebook",
+						"pages",
+						"1573307926039629",
+						"integrate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/users",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get messages",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/users/7b082a2a-4abf-41b3-9e12-1aca8f2b53f9/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"users",
+						"7b082a2a-4abf-41b3-9e12-1aca8f2b53f9",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send message (text)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"channel\": \"facebook\",\r\n  \"text\": \"Hello World!\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/users/d264a772-f410-4a99-abfe-6d2164369a52/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"users",
+						"d264a772-f410-4a99-abfe-6d2164369a52",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send message (image)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"channel\": \"facebook\",\r\n\t\"type\": \"image\",\r\n\t\"media\": \"https://en.facebookbrand.com/wp-content/uploads/2016/05/en_like_button_header_05_2018.png\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/users/d264a772-f410-4a99-abfe-6d2164369a52/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"users",
+						"d264a772-f410-4a99-abfe-6d2164369a52",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send message (buttons)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"channel\": \"facebook\",\r\n    \"type\": \"actions\",\r\n    \"text\": \"Was the coffee any good?\", \r\n    \"actions\": [\r\n        {\r\n            \"type\": \"reply\",\r\n            \"displayText\": \"The best!\",\r\n            \"responseText\": \"Y\"\r\n        },\r\n        {\r\n            \"type\": \"reply\",\r\n            \"displayText\": \"That was coffee?\",\r\n            \"responseText\": \"N\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://api.messagemedia.com/beta/conversations/users/d264a772-f410-4a99-abfe-6d2164369a52/messages",
+					"protocol": "https",
+					"host": [
+						"api",
+						"messagemedia",
+						"com"
+					],
+					"path": [
+						"beta",
+						"conversations",
+						"users",
+						"d264a772-f410-4a99-abfe-6d2164369a52",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ae822b62-0055-4f4e-a4ed-7226fcafb06b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "78a691e5-b53e-467f-8a3b-c62a19979ffa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
