@@ -1,0 +1,564 @@
+{
+  "info": {
+    "name": "Reports",
+    "_postman_id": "b7109df2-d94a-48ad-962f-604f34b95050",
+    "description": "The MessageMedia Reports API provides a number of endpoints for running reports of messages sent and received using\nMessages API. Reports can be detailed, a list of all messages and details of each message, or summary reports, which\ncan be aggregated on a number of dimensions.\n\n![Reports](https://developers.messagemedia.com/wp-content/uploads/2017/11/reporting-api.png)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/"
+  },
+  "item": [
+    {
+      "name": "Messaging Reports",
+      "description": "",
+      "item": [
+        {
+          "id": "d17c9ee9-5cd3-40e2-aac6-c1b343284d61",
+          "name": "getMetadataKeys",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1",
+                "reporting/:messageType/metadata/keys"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2%2F10%2F2017%201%3A30%3A00%20PM",
+                  "disabled": false
+                },
+                {
+                  "key": "end_date",
+                  "value": "2%2F12%2F2017%201%3A30%3A00%20PM",
+                  "disabled": false
+                },
+                {
+                  "key": "accounts",
+                  "value": "%5B%22accounts%22%5D",
+                  "disabled": false
+                },
+                {
+                  "key": "timezone",
+                  "value": "timezone",
+                  "disabled": false
+                }
+              ],
+              "variable": [
+                {
+                  "id": "messageType",
+                  "value": "sent_messages",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Returns a list of metadata keys"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"data\": [],\r\n  \"properties\": {\r\n    \"end_date\": \"2017-02-10T13:30:00\",\r\n    \"start_date\": \"2017-02-12T13:30:00\",\r\n    \"accounts\": []\r\n  }\r\n}",
+              "status": "A list of all metadata keys used in the specified time window",
+              "code": 200,
+              "name": "Response_200",
+              "id": "3ce902a3-386a-4753-87fc-4d332fc7c735"
+            }
+          ]
+        },
+        {
+          "id": "3dd6581a-1800-400b-8fe8-d4e6a2ec6e86",
+          "name": "getAsyncReports",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/async_reports?page=238.240554341227&page_size=238.240554341227",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Lists asynchronous reports."
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"data\": [\r\n    {\r\n      \"message_type\": \"SENT_MESSAGES\",\r\n      \"type\": \"SUMMARY\",\r\n      \"report_status\": \"REQUESTED\",\r\n      \"created_datetime\": \"2017-02-12T13:30:00\",\r\n      \"last_modified_datetime\": \"2017-02-12T13:30:00\"\r\n    }\r\n  ],\r\n  \"pagination\": {}\r\n}",
+              "status": "A list of requested asynchronous reports.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "493bea8f-e7b6-49b5-af0a-aa599a6b7a45"
+            }
+          ]
+        },
+        {
+          "id": "fca2cee7-bac3-4713-b783-398d73bb24f0",
+          "name": "getAsyncReportById",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1",
+                "reporting/async_reports/:report_id"
+              ],
+              "variable": [
+                {
+                  "id": "report_id",
+                  "value": "report_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Gets a single asynchronous report."
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message_type\": \"SENT_MESSAGES\",\r\n  \"type\": \"SUMMARY\",\r\n  \"report_status\": \"REQUESTED\",\r\n  \"created_datetime\": \"2017-02-12T13:30:00\",\r\n  \"last_modified_datetime\": \"2017-02-12T13:30:00\"\r\n}",
+              "status": "The asynchronous report.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "d3d4644e-6767-46eb-a8a4-d5dd86545780"
+            },
+            {
+              "status": "The requested report was not found.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "d957a178-2d51-4c13-80ae-c90ba20b31ed"
+            }
+          ]
+        },
+        {
+          "id": "97d83366-1f4a-4d38-957f-67b9c55d27cc",
+          "name": "getAsyncReportDataById",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1",
+                "reporting/async_reports/:report_id/data"
+              ],
+              "variable": [
+                {
+                  "id": "report_id",
+                  "value": "report_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Gets the data of an asynchronous report."
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain",
+                  "disabled": false
+                }
+              ],
+              "body": "The asynchronous report data as a download.",
+              "status": "",
+              "code": 200,
+              "name": "Response_200",
+              "id": "4ee9a79a-8c97-4c35-b572-5f191c03fc47"
+            },
+            {
+              "status": "Report not found or not finished.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "48359d40-5da2-4fb5-b17a-81d8c284a059"
+            }
+          ]
+        },
+        {
+          "id": "126804a6-6b89-46c0-b840-a9bb5acc8922",
+          "name": "submitReceivedMessagesDetail",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/received_messages/detail/async",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"end_date\": \"2017-02-10T13:30:00\",\r\n  \"start_date\": \"2017-02-12T13:30:00\",\r\n  \"period\": \"TODAY\",\r\n  \"sort_by\": \"ACCOUNT\",\r\n  \"sort_direction\": \"ASCENDING\",\r\n  \"timezone\": \"Australia/Melbourne\",\r\n  \"accounts\": [],\r\n  \"message_format\": \"SMS\",\r\n  \"action\": \"OPTOUT\",\r\n  \"delivery_options\": [\r\n    {\r\n      \"delivery_type\": \"EMAIL\",\r\n      \"delivery_addresses\": [],\r\n      \"delivery_format\": \"CSV\"\r\n    }\r\n  ]\r\n}"
+            },
+            "description": "Submits a request to generate an async detail report"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"id\": \"b8ffd5b3-050a-46b9-9192-fbd7c20a22ec\"\r\n}",
+              "status": "The identifier of the async report request",
+              "code": 201,
+              "name": "Response_201",
+              "id": "0ac84d51-439a-4b42-bef3-a16422f87ccb"
+            }
+          ]
+        },
+        {
+          "id": "eb7c670b-9248-4e9f-a594-f8933fa7bc7e",
+          "name": "getReceivedMessagesDetail",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/received_messages/detail?end_date=2%2F10%2F2017%201%3A30%3A00%20PM&start_date=2%2F12%2F2017%201%3A30%3A00%20PM&accounts=%5B%22accounts%22%5D&action=OPTOUT&destination_address_country=destination_address_country&destination_address=destination_address&message_format=SMS&metadata_key=metadata_key&metadata_value=metadata_value&page=246.289489779756&page_size=246.289489779756&sort_by=ACCOUNT&sort_direction=ASCENDING&source_address_country=source_address_country&source_address=source_address&timezone=timezone",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Returns a list message received"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"data\": [\r\n    {\r\n      \"account\": \"MyAccount001\",\r\n      \"action\": \"OPTOUT\",\r\n      \"content\": \"Hello back\",\r\n      \"destination_address\": \"+61491570156\",\r\n      \"destination_address_country\": \"AU\",\r\n      \"format\": \"SMS\",\r\n      \"id\": \"id\",\r\n      \"in_response_to\": \"in_response_to\",\r\n      \"metadata\": {},\r\n      \"source_address\": \"+61491570156\",\r\n      \"source_address_country\": \"AU\",\r\n      \"timestamp\": \"2/12/2017 1:30:00 PM\"\r\n    }\r\n  ],\r\n  \"pagination\": {\r\n    \"page\": 28.5572125569718,\r\n    \"page_size\": 28.5572125569718,\r\n    \"total_count\": 28.5572125569718,\r\n    \"page_count\": 28.5572125569718,\r\n    \"next_uri\": \"next_uri\",\r\n    \"previous_uri\": \"previous_uri\"\r\n  },\r\n  \"properties\": {\r\n    \"end_date\": \"2/10/2017 1:30:00 PM\",\r\n    \"start_date\": \"2/12/2017 1:30:00 PM\",\r\n    \"sorting\": {\r\n      \"field\": \"ACCOUNT\",\r\n      \"order\": \"ASCENDING\"\r\n    },\r\n    \"filters\": {\r\n      \"delivery_report\": \"delivery_report\",\r\n      \"destination_address_country\": \"destination_address_country\",\r\n      \"destination_address\": \"destination_address\",\r\n      \"message_format\": \"message_format\",\r\n      \"metadata_key\": \"metadata_key\",\r\n      \"metadata_value\": \"metadata_value\",\r\n      \"source_address_country\": \"source_address_country\",\r\n      \"source_address\": \"source_address\",\r\n      \"status_code\": \"status_code\",\r\n      \"status\": \"status\",\r\n      \"action\": \"action\",\r\n      \"accounts\": [\r\n        \"accounts\"\r\n      ]\r\n    },\r\n    \"timezone\": \"The timezone that this report is presented in, this may be passed in as a parameter to the report, or taken from account settings\"\r\n  }\r\n}",
+              "status": "A list of all messages received in the specified time window",
+              "code": 200,
+              "name": "Response_200",
+              "id": "001ab260-3b4c-4007-b8a0-fceca648852f"
+            }
+          ]
+        },
+        {
+          "id": "3abc20b2-e437-49d4-9b16-5bcdd401b6e2",
+          "name": "submitSentMessagesDetail",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/sent_messages/detail/async",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"end_date\": \"2017-02-10T13:30:00\",\r\n  \"start_date\": \"2017-02-12T13:30:00\",\r\n  \"period\": \"TODAY\",\r\n  \"sort_by\": \"DELIVERY_REPORT\",\r\n  \"sort_direction\": \"ASCENDING\",\r\n  \"timezone\": \"Australia/Melbourne\",\r\n  \"accounts\": [],\r\n  \"message_format\": \"SMS\",\r\n  \"status\": \"CANCELLED\",\r\n  \"statuses\": [\r\n    \"CANCELLED\"\r\n  ],\r\n  \"delivery_options\": [\r\n    {\r\n      \"delivery_type\": \"EMAIL\",\r\n      \"delivery_addresses\": [],\r\n      \"delivery_format\": \"CSV\"\r\n    }\r\n  ]\r\n}"
+            },
+            "description": "Submits a request to generate an async detail report"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"id\": \"b8ffd5b3-050a-46b9-9192-fbd7c20a22ec\"\r\n}",
+              "status": "The identifier of the async report request",
+              "code": 201,
+              "name": "Response_201",
+              "id": "9f1d631d-4fd0-4143-88ce-a2562bbecebc"
+            }
+          ]
+        },
+        {
+          "id": "9919006c-d154-4281-a503-0ebd8da4b8e8",
+          "name": "getSentMessagesDetail",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/sent_messages/detail?end_date=2%2F10%2F2017%201%3A30%3A00%20PM&start_date=2%2F12%2F2017%201%3A30%3A00%20PM&accounts=%5B%22accounts%22%5D&delivery_report=true&destination_address_country=destination_address_country&destination_address=destination_address&message_format=SMS&metadata_key=metadata_key&metadata_value=metadata_value&status_code=status_code&status=CANCELLED&statuses=CANCELLED&page=246.289489779756&page_size=246.289489779756&sort_by=ACCOUNT&sort_direction=ASCENDING&source_address_country=source_address_country&source_address=source_address&timezone=timezone",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Returns a list of message sent"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"data\": [\r\n    {\r\n      \"account\": \"MyAccount001\",\r\n      \"content\": \"Hello world!\",\r\n      \"delivered_timestamp\": \"2/12/2017 1:30:00 PM\",\r\n      \"delivery_report\": false,\r\n      \"destination_address\": \"+61491570156\",\r\n      \"destination_address_country\": \"AU\",\r\n      \"format\": \"SMS\",\r\n      \"id\": \"id\",\r\n      \"in_response_to\": \"in_response_to\",\r\n      \"metadata\": {},\r\n      \"source_address\": \"+61491570156\",\r\n      \"source_address_country\": \"AU\",\r\n      \"units\": 2,\r\n      \"timestamp\": \"2/12/2017 1:30:00 PM\"\r\n    }\r\n  ],\r\n  \"pagination\": {\r\n    \"page\": 120.052494448634,\r\n    \"page_size\": 120.052494448634,\r\n    \"total_count\": 120.052494448634,\r\n    \"page_count\": 120.052494448634,\r\n    \"next_uri\": \"next_uri\",\r\n    \"previous_uri\": \"previous_uri\"\r\n  },\r\n  \"properties\": {\r\n    \"end_date\": \"2/10/2017 1:30:00 PM\",\r\n    \"start_date\": \"2/12/2017 1:30:00 PM\",\r\n    \"sorting\": {\r\n      \"field\": \"ACCOUNT\",\r\n      \"order\": \"ASCENDING\"\r\n    },\r\n    \"filters\": {\r\n      \"delivery_report\": \"delivery_report\",\r\n      \"destination_address_country\": \"destination_address_country\",\r\n      \"destination_address\": \"destination_address\",\r\n      \"message_format\": \"message_format\",\r\n      \"metadata_key\": \"metadata_key\",\r\n      \"metadata_value\": \"metadata_value\",\r\n      \"source_address_country\": \"source_address_country\",\r\n      \"source_address\": \"source_address\",\r\n      \"status_code\": \"status_code\",\r\n      \"status\": \"status\",\r\n      \"action\": \"action\",\r\n      \"accounts\": [\r\n        \"accounts\"\r\n      ]\r\n    },\r\n    \"timezone\": \"The timezone that this report is presented in, this may be passed in as a parameter to the report, or taken from account settings\"\r\n  }\r\n}",
+              "status": "A list of all messages sent in the specified time window",
+              "code": 200,
+              "name": "Response_200",
+              "id": "1e3e8cf1-e404-47a3-81f5-67b41ed7cd97"
+            }
+          ]
+        },
+        {
+          "id": "dae0e1c1-7300-4690-b7f4-23265e732b10",
+          "name": "submitReceivedMessagesSummary",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/received_messages/summary/async",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"end_date\": \"2017-02-10T13:30:00\",\r\n  \"start_date\": \"2017-02-12T13:30:00\",\r\n  \"summary_by\": \"COUNT\",\r\n  \"summary_field\": \"MESSAGE_ID\",\r\n  \"group_by\": [\r\n    \"DAY\"\r\n  ],\r\n  \"period\": \"THIS_WEEK\",\r\n  \"timezone\": \"Australia/Melbourne\",\r\n  \"accounts\": [],\r\n  \"message_format\": \"SMS\",\r\n  \"action\": \"OPTOUT\",\r\n  \"delivery_options\": [\r\n    {\r\n      \"delivery_type\": \"EMAIL\",\r\n      \"delivery_addresses\": [],\r\n      \"delivery_format\": \"CSV\"\r\n    }\r\n  ]\r\n}"
+            },
+            "description": "Submits a summarised report of received messages"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"id\": \"b8ffd5b3-050a-46b9-9192-fbd7c20a22ec\"\r\n}",
+              "status": "The identifier of the async report request",
+              "code": 201,
+              "name": "Response_201",
+              "id": "6e8243a6-85fb-42d2-afd2-8adc089a5e1d"
+            },
+            {
+              "status": "The group_by combination is not currently implemented",
+              "code": 501,
+              "name": "Response_501",
+              "id": "95da6ac1-ecc9-489f-b783-2f41ad9143b8"
+            }
+          ]
+        },
+        {
+          "id": "f97d4755-e9c7-48ef-99b8-564e9364d2f8",
+          "name": "getReceivedMessagesSummary",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/received_messages/summary?end_date=2%2F10%2F2017%201%3A30%3A00%20PM&start_date=2%2F12%2F2017%201%3A30%3A00%20PM&group_by=DAY&accounts=%5B%22accounts%22%5D&destination_address_country=destination_address_country&destination_address=destination_address&message_format=SMS&metadata_key=metadata_key&metadata_value=metadata_value&summary_by=COUNT&summary_field=UNITS&source_address_country=source_address_country&source_address=source_address&timezone=timezone",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Returns a summarised report of messages received"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"properties\": {\r\n    \"end_date\": \"2017-02-10T13:30:00\",\r\n    \"start_date\": \"2017-02-12T13:30:00\",\r\n    \"grouping\": \"DAY\",\r\n    \"summary\": \"COUNT\",\r\n    \"summary_field\": \"UNITS\",\r\n    \"timezone\": \"The timezone that this report is presented in, this may be passed in as a parameter to the report, or taken from account settings\"\r\n  },\r\n  \"data\": [\r\n    {}\r\n  ]\r\n}",
+              "status": "A summarised report of all messages received in the specified time, grouped by by the specified grouping parameter",
+              "code": 200,
+              "name": "Response_200",
+              "id": "f1d37efe-e3ac-4ad3-b76e-911e8d2b3d64"
+            },
+            {
+              "status": "The group_by combination is not currently implemented",
+              "code": 501,
+              "name": "Response_501",
+              "id": "78863a6f-b9e3-4746-8528-d3fbf490744b"
+            }
+          ]
+        },
+        {
+          "id": "33e6041f-fe6b-4a89-b04c-b8ff1e4704bb",
+          "name": "submitSentMessagesSummary",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/sent_messages/summary/async",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"end_date\": \"2017-02-10T13:30:00\",\r\n  \"start_date\": \"2017-02-12T13:30:00\",\r\n  \"summary_by\": \"COUNT\",\r\n  \"summary_field\": \"UNITS\",\r\n  \"group_by\": [\r\n    \"DAY\"\r\n  ],\r\n  \"period\": \"YESTERDAY\",\r\n  \"timezone\": \"Australia/Melbourne\",\r\n  \"accounts\": [],\r\n  \"message_format\": \"SMS\",\r\n  \"delivery_options\": [\r\n    {\r\n      \"delivery_type\": \"EMAIL\",\r\n      \"delivery_addresses\": [],\r\n      \"delivery_format\": \"CSV\"\r\n    }\r\n  ]\r\n}"
+            },
+            "description": "Submits a summarised report of sent messages"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"id\": \"b8ffd5b3-050a-46b9-9192-fbd7c20a22ec\"\r\n}",
+              "status": "The identifier of the async report request",
+              "code": 201,
+              "name": "Response_201",
+              "id": "885220f3-31ce-49c4-b2a9-94f93fbe128e"
+            },
+            {
+              "status": "The group_by combination is not currently implemented",
+              "code": 501,
+              "name": "Response_501",
+              "id": "015b2280-84b7-4ca7-94ce-a22376a4cf3b"
+            }
+          ]
+        },
+        {
+          "id": "082313da-2eb8-4b89-928c-b95d57b2491b",
+          "name": "getSentMessagesSummary",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/reporting/sent_messages/summary?end_date=2%2F10%2F2017%201%3A30%3A00%20PM&start_date=2%2F12%2F2017%201%3A30%3A00%20PM&group_by=DAY&accounts=%5B%22accounts%22%5D&delivery_report=false&destination_address_country=destination_address_country&destination_address=destination_address&summary_by=COUNT&summary_field=UNITS&message_format=SMS&metadata_key=metadata_key&metadata_value=metadata_value&status_code=status_code&source_address_country=source_address_country&source_address=source_address&timezone=timezone",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Returns a summarised report of messages sent"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"properties\": {\r\n    \"end_date\": \"2017-02-10T13:30:00\",\r\n    \"start_date\": \"2017-02-12T13:30:00\",\r\n    \"grouping\": \"DAY\",\r\n    \"summary\": \"COUNT\",\r\n    \"summary_field\": \"UNITS\",\r\n    \"timezone\": \"The timezone that this report is presented in, this may be passed in as a parameter to the report, or taken from account settings\"\r\n  },\r\n  \"data\": [\r\n    {}\r\n  ]\r\n}",
+              "status": "A summarised report of all messages received in the specified time, grouped by by the specified grouping parameter",
+              "code": 200,
+              "name": "Response_200",
+              "id": "eff8c7f6-b0ab-4473-808b-0346a99911b2"
+            },
+            {
+              "status": "The group_by combination is not currently implemented",
+              "code": 501,
+              "name": "Response_501",
+              "id": "febaa5a9-0f1c-439b-b19b-353e35928d99"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
