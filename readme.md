@@ -22,3 +22,11 @@ You can use these by cloning the repo and importing into your Postman Applicatio
 ### Webhooks Management
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4484dfbb1fef44e53094)
+
+### Reporting
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4328b75d99c64a439e39)
+
+### Signature Key Management
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/e301a1cb751032a3d32f)
