@@ -7,10 +7,6 @@ This repo contains full postman collections for most of the MM APIs. This will b
 
 You can use these by cloning the repo and importing into your Postman Application OR with the buttons below:
 
-### Conversations
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9c0f67ae55f173310d33)
-
 ### Lookups
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7dbb0007cff1630317b5)
@@ -34,3 +30,9 @@ You can use these by cloning the repo and importing into your Postman Applicatio
 ### Number Authorisation
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/0cb82955424cc2d15b48)
+
+### Conversations
+
+N.B. Conversations API is in beta and requires account activation, see MessageMedia docs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9c0f67ae55f173310d33)
