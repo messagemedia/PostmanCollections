@@ -1,0 +1,556 @@
+{
+  "info": {
+    "name": "Signature Key Management",
+    "_postman_id": "aed2013e-26b6-4997-8680-e764e0c2aa04",
+    "description": "As MessageMedia's customer, you want to be able to ensure that callbacks\nare coming from MessageMedia and not from a 3rd party. Since these are calls to\nyour own system, you should be provided with an extra level of security\nwhen calling your resources.\n\nThe MessageMedia Signature Key API provides a number of endpoints\nfor managing key used to sign each unique request to ensure security\nand the requests can't (easily) be spoofed. This is similar to using\nHMAC in your outbound messaging (rather than HTTP Basic).\n\nThe Signature Key API provides seven main endpoints:\n\n- ```Create signature key``` Create a new signature key for signature verification in callbacks.\n\n- ```Get signature key detail``` Retrieve the current detail of a signature key using the key_id returned in the ```create signature key``` endpoint.\n\n- ```Delete signature key``` Delete a signature key using the key_id returned in the ```create signature key``` endpoint.\n\n- ```Get signature key list``` Retrieve the paginated list of signature keys.\n\n- ```Enable signature key``` Enable a signature key using the key_id returned in the ```create signature key``` endpoint.\n\n- ```Get enabled signature key``` Retrieve the current enabled signature key.\n\n- ```Disable an enabled signature key``` Disable the current enabled signature key.\n\n![Message Flow](http://i68.tinypic.com/2130yed.jpg)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/"
+  },
+  "item": [
+    {
+      "name": "Signature Key Management",
+      "description": "",
+      "item": [
+        {
+          "id": "41060894-777d-4981-a34a-96b370034137",
+          "name": "Create signature key",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/iam/signature_keys",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"digest\": \"SHA224\",\r\n  \"cipher\": \"RSA\"\r\n}"
+            },
+            "description": "This will create a key pair:\n- The ```private key``` stored in MessageMedia is used to create the signature.\n- The ```public key``` is returned and stored at your side to verify the signature in callbacks.\nYou need to enable your signature key after creating.\nThe most basic body has the following structure:\n```json\n{\n    \"digest\": \"SHA224\",\n    \"cipher\": \"RSA\"\n}\n```\n- ```digest``` is used to hash the message. The valid values for digest type are: SHA224, SHA256, SHA512\n- ```cipher``` is used to encrypt the hashed message. The valid value for cipher type is: RSA\nA successful request for the ```create signature key``` endpoint will return a response body as follows:\n```json\n{\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\n    \"public_key\": \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTIxtRyT5CuOD74r7UCT+AKzWNxvaAP9myjAqR7+vBnJKEvoPnmbKTnm6uLlxutnMbjKrnCCWnQ9vtBVnnd+ElhwLDPADfMcJoOqwi7mTcxucckeEbBsfsgYRfdacxgSZL8hVD1hLViQr3xwjEIkJcx1w3x8npvwMuTY0uW8+PjwIDAQAB\",\n    \"cipher\": \"RSA\",\n    \"digest\": \"SHA224\",\n    \"created\": \"2018-01-18T10:16:12.364Z\",\n    \"enabled\": false\n}\n```\nThe response body of a successful POST request to the ```create signature key``` endpoint will contain six properties:\n- ```key_id``` will be a 36 character UUID which can be used to enable, delete or get the details.\n- ```public_key``` is used to decrypt the signature.\n- ```cipher``` same as cipher in request body.\n- ```digest``` same as digest in request body.\n- ```created``` is the created date.\n- ```enabled``` is false for the new signature key. You can use the ```enable signature key``` endpoint to set this field to true."
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\r\n  \"public_key\": \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTIxtRyT5CuOD74r7UCT+AKzWNxvaAP9myjAqR7+vBnJKEvoPnmbKTnm6uLlxutnMbjKrnCCWnQ9vtBVnnd+ElhwLDPADfMcJoOqwi7mTcxucckeEbBsfsgYRfdacxgSZL8hVD1hLViQr3xwjEIkJcx1w3x8npvwMuTY0uW8+PjwIDAQAB\",\r\n  \"cipher\": \"RSA\",\r\n  \"digest\": \"SHA224\",\r\n  \"created\": \"2018-01-18T10:16:12.364Z\",\r\n  \"enabled\": false\r\n}",
+              "status": "The new signature key has been created.",
+              "code": 201,
+              "name": "Response_201",
+              "id": "182e3682-ce45-4f23-b795-111ea44c1efd"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Bad Request\",\r\n  \"details\": [\r\n    \"/cipher: [RA] is invalid\"\r\n  ]\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "86a5c6c6-92e5-4cf9-8a0b-1b3812089899"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "81b02a04-24b8-454e-bbba-0ea4d5751e7a"
+            }
+          ]
+        },
+        {
+          "id": "5544a8fd-7404-4530-97dc-538583a226be",
+          "name": "Get signature key detail",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1/iam/signature_keys/:key_id"
+              ],
+              "variable": [
+                {
+                  "id": "key_id",
+                  "value": "key_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Retrieve the current detail of a signature key using the key_id returned in the ```create signature key``` endpoint.\nA successful request for the ```get signature key detail``` endpoint will return a response body as follows:\n```json\n{\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\n    \"cipher\": \"RSA\",\n    \"digest\": \"SHA224\",\n    \"created\": \"2018-01-18T10:16:12.364Z\",\n    \"enabled\": false\n}\n```\n*Note: If an invalid or non-existent key_id parameter is specified in the request, then an HTTP 404 Not Found response will be returned*"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\r\n  \"cipher\": \"RSA\",\r\n  \"digest\": \"SHA224\",\r\n  \"created\": \"2018-01-18T10:16:12.364Z\",\r\n  \"enabled\": false\r\n}",
+              "status": "The detail of signature key.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "f4377c7a-92e4-4da7-8433-0fed146e9f85"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Bad Request\",\r\n  \"details\": [\r\n    \"key_id property value is invalid\"\r\n  ]\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "7268e0b8-a517-487f-a7ae-271686dd8f2b"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "2d75b8a0-dff0-4109-99bf-cff435270763"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Entity not found\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "f12767aa-8233-440b-9287-9bbb88d3cbb6"
+            }
+          ]
+        },
+        {
+          "id": "286d98e6-c624-47a0-b846-ba6d2c0bb15a",
+          "name": "Delete signature key",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1/iam/signature_keys/:key_id"
+              ],
+              "variable": [
+                {
+                  "id": "key_id",
+                  "value": "key_id",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Delete a signature key using the key_id returned in the ```create signature key``` endpoint.\nA successful request for the ```delete signature key``` endpoint will return an empty response body.\n*Note: If an invalid or non-existent key_id parameter is specified in the request, then an HTTP 404 Not Found response will be returned*"
+          },
+          "response": [
+            {
+              "status": "The signature key has been deleted.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "27432515-d63a-4dfe-9374-251748881166"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "85dfcd98-b02c-4a92-bca1-24c451fab69a"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Entity not found\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "bc3bb4f5-cd68-4a12-a08a-3bd100063070"
+            }
+          ]
+        },
+        {
+          "id": "f7443543-7a98-4606-a793-dd896d7d85ce",
+          "name": "Get signature key list",
+          "request": {
+            "url": {
+              "protocol": "https",
+              "host": "api.messagemedia.com",
+              "path": [
+                "v1/iam/signature_keys?page=:page&page_size=:page_size"
+              ],
+              "variable": [
+                {
+                  "id": "page",
+                  "value": "page",
+                  "type": "string"
+                },
+                {
+                  "id": "page_size",
+                  "value": "page_size",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Retrieve the paginated list of signature keys.\nA successful request for the ```get signature key list``` endpoint will return a response body as follows:\n```json\n[\n  {\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\n    \"cipher\": \"RSA\",\n    \"digest\": \"SHA224\",\n    \"created\": \"2018-01-18T10:16:12.364Z\",\n    \"enabled\": false\n  }\n]\n```"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "[\r\n  {\r\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\r\n    \"cipher\": \"RSA\",\r\n    \"digest\": \"SHA224\",\r\n    \"created\": \"2018-01-18T10:16:12.364Z\",\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"key_id\": \"6a0108cf-3659-435e-800e-004beb910fd1\",\r\n    \"cipher\": \"RSA\",\r\n    \"digest\": \"SHA224\",\r\n    \"created\": \"2018-01-18T10:15:31.035Z\",\r\n    \"enabled\": false\r\n  }\r\n]",
+              "status": "The list of signature keys.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "dbcfd983-e199-4ef1-b05d-1914d793149a"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Bad Request\",\r\n  \"details\": [\r\n    \"page property value is invalid\"\r\n  ]\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "20070f5c-e84a-49c0-a8f8-f0a13f4f4cdc"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "a96b29ef-ae40-4ea7-8fd7-390c849149cf"
+            }
+          ]
+        },
+        {
+          "id": "0cb59d6b-5e55-4575-a33d-69a0590086b7",
+          "name": "Enable signature key",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/iam/signature_keys/enabled",
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\"\r\n}"
+            },
+            "description": "Enable a signature key using the key_id returned in the ```create signature key``` endpoint.\nThere is only one signature key is enabled at the one moment in time. So if you enable the new signature key, the old one will be disabled.\nThe most basic body has the following structure:\n```json\n{\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\"\n}\n```\nThe response body of a successful PATCH request to ```enable signature key``` endpoint will contain the ```enabled``` properties with the value is true as follows:\n```json\n{\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\n    \"cipher\": \"RSA\",\n    \"digest\": \"SHA224\",\n    \"created\": \"2018-01-18T10:16:12.364Z\",\n    \"enabled\": true\n}\n```\n*Note: If an invalid or non-existent key_id parameter is specified in the request, then an HTTP 404 Not Found response will be returned*"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\r\n  \"cipher\": \"RSA\",\r\n  \"digest\": \"SHA224\",\r\n  \"created\": \"2018-01-18T10:16:12.364Z\",\r\n  \"enabled\": true\r\n}",
+              "status": "The enabled signature key.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "fea9f13c-5b21-4ac6-abb6-210766162e60"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Bad Request\",\r\n  \"details\": [\r\n    \"/key_id: Key id cannot be null\"\r\n  ]\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 400,
+              "name": "Response_400",
+              "id": "cbc74b11-b79f-4dd7-bcb5-b593401ce143"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "674852cd-b228-40f4-803c-7300c1822652"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Entity not found\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "24950b01-ada8-4b4f-a4bf-e1c51df56af8"
+            }
+          ]
+        },
+        {
+          "id": "57881c4a-b30b-4253-b90c-9940adb94645",
+          "name": "Get enabled signature key",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/iam/signature_keys/enabled",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Retrieve the currently enabled signature key.\nA successful request for the ```get enabled signature key``` endpoint will return a response body as follows:\n```json\n{\n    \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\n    \"cipher\": \"RSA\",\n    \"digest\": \"SHA224\",\n    \"created\": \"2018-01-18T10:16:12.364Z\",\n    \"enabled\": true\n}\n```\n*Note: If there is no enabled signature key, then an HTTP 404 Not Found response will be returned*"
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"key_id\": \"7ca628a8-08b0-4e42-aeb8-960b37049c31\",\r\n  \"cipher\": \"RSA\",\r\n  \"digest\": \"SHA224\",\r\n  \"created\": \"2018-01-18T10:16:12.364Z\",\r\n  \"enabled\": true\r\n}",
+              "status": "The detail of signature key.",
+              "code": 200,
+              "name": "Response_200",
+              "id": "8ce0d804-91b6-4a3d-a260-be22d1edcd8a"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "387bd5ab-387a-4536-a4f2-41fa726a3d3c"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"Currently no key is enabled\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 404,
+              "name": "Response_404",
+              "id": "bcca3853-acec-4a6a-956c-c08b32a8dd50"
+            }
+          ]
+        },
+        {
+          "id": "29b89369-b0e8-47b1-9076-24ce2ecd7ce5",
+          "name": "Disable the current enabled signature key.",
+          "request": {
+            "url": "https://api.messagemedia.com/v1/iam/signature_keys/enabled",
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "description": "",
+                "disabled": false
+              }
+            ],
+            "body": {
+              "mode": "raw"
+            },
+            "description": "Disable the current enabled signature key.\nA successful request for the ```disable the current enabled signature key.``` endpoint will return no content when successful.\nIf there is an enabled key, it will be disabled; and the 204 status code is returned.\nIf there is no key or no enabled key, the 204 status code is also returned."
+          },
+          "response": [
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "code": 204,
+              "name": "Response_204",
+              "id": "81547842-4fb7-4ac4-b309-01ab6427cb7e"
+            },
+            {
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "disabled": false
+                }
+              ],
+              "body": "{\r\n  \"message\": \"This feature has not been enabled in your account.\"\r\n}",
+              "status": "Unexpected error in API call. See HTTP response body for details.",
+              "code": 403,
+              "name": "Response_403",
+              "id": "7ec9309a-6cd5-4544-bafc-786082ac4300"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
