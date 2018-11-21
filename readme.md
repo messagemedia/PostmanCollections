@@ -5,7 +5,17 @@ This repo contains full postman collections for most of the MM APIs. This will b
 
 ## Instructions
 
-You can use these by cloning the repo and importing into your Postman Application OR with the buttons below:
+You can use these by cloning the repo and importing into your Postman Application OR with the buttons below.
+
+First sign up for a developer key and receive your starter credit at:
+
+https://developers.messagemedia.com/register/
+
+Be sure to keep this somewhere safe after you register. 
+
+Click on the collection you want to ue below and it will open up in Postman. In the side draw for postman hover over the top level of the collection that jsut imported until you see the three dots. Click on the three dots meny, and select edit, to select the collection level details.  
+
+Go to Authorisation tab, and change from "Inherit auth from parent, to "Basic Auth" and in the username field, and in the password field put the secret.
 
 ### Lookups
 
