@@ -13,9 +13,21 @@ https://developers.messagemedia.com/register/
 
 Be sure to keep this somewhere safe after you register. 
 
-Click on the collection you want to use below and it will open up in Postman. In the side draw for postman hover over the top level of the collection that jsut imported until you see the three dots. Click on the three dots meny, and select edit, to select the collection level details.  
+Click on the collection you want to use below and it will open up in Postman. In the side draw for postman hover over the top level of the collection that jsut imported until you see the three dots. Click on the three dots menu, and select edit, to select the collection level details.  
 
-Go to Authorisation tab, and change from "Inherit auth from parent, to "Basic Auth" and in the username field, and in the password field put the secret.
+[]
+
+Go to the variables tab and make sure the username and password variables are present and have been updated to be your username (developer key) and password (developer secret). 
+
+[]
+
+Go to the authorisation tab and check that the authorisation type is set to Basic Auth and the username and password reference the variables. 
+
+[]
+
+All other sublevels of the collection should have all set to "Inherit auth from parent".
+
+You can now run the collections by changing the relevant key value pairs. Be sure to consult the documentation for which ones are required and which ones you can delete as well as information about what each key value pair is for. 
 
 ### Lookups
 
