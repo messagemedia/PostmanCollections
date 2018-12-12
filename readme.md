@@ -15,7 +15,7 @@ Be sure to keep this somewhere safe after you register.
 
 Click on the collection you want to use below and it will open up in Postman. In the side draw for postman hover over the top level of the collection that jsut imported until you see the three dots. Click on the three dots menu, and select edit, to select the collection level details.  
 
-![step1](/img/toplevel1.png)
+![step1](/img/topleveledit1.png)
 
 Go to the variables tab and make sure the username and password variables are present and have been updated to be your username (developer key) and password (developer secret). 
 
