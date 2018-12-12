@@ -15,15 +15,15 @@ Be sure to keep this somewhere safe after you register.
 
 Click on the collection you want to use below and it will open up in Postman. In the side draw for postman hover over the top level of the collection that jsut imported until you see the three dots. Click on the three dots menu, and select edit, to select the collection level details.  
 
-[]
+![step1](/img/topleveledit1.png)
 
 Go to the variables tab and make sure the username and password variables are present and have been updated to be your username (developer key) and password (developer secret). 
 
-[]
+![step2](/img/usernamepasswordedit.png)
 
 Go to the authorisation tab and check that the authorisation type is set to Basic Auth and the username and password reference the variables. 
 
-[]
+![step3](/img/authorisationedit.png)
 
 All other sublevels of the collection should have all set to "Inherit auth from parent".
 
