@@ -31,7 +31,9 @@ You can now run the collections by changing the relevant key value pairs. Be sur
 
 ### Lookups
 
-The Lookups API will enable you to reduce the number of failed messages your send by looking up details about intended recipients. Validate the phone numbers you’re sending to by checking their validity, type and carrier details.
+Our Lookups API provides a simple way to keep your database clean. It accesses mobile carrier information about any mobile number, in real-time, anywhere in the world.
+
+To learn more about the benefits of using the Lookups API, visit our product page.
 
 In the collection update the headers with your parameters. Enter your phone number, and one or more of the lookup type. You can use "carrier, type" together or individually (seperate with a comma). Option "hlr" can only be used individually.
 
