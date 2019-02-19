@@ -31,6 +31,10 @@ You can now run the collections by changing the relevant key value pairs. Be sur
 
 ### Lookups
 
+The Lookups API will enable you to reduce the number of failed messages your send by looking up details about intended recipients. Validate the phone numbers you’re sending to by checking their validity, type and carrier details.
+
+In the collection update the headers with your parameters. Enter your phone number, and one or more of the lookup type. You can use "carrier, type" together or individually (seperate with a comma). Option "hlr" can only be used individually.
+
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7dbb0007cff1630317b5)
 
 ### Messages
