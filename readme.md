@@ -3,7 +3,7 @@
 
 This repo contains full postman collections for most of the MessageMedia APIs. This will be added to over time.
 
-## Instructions
+## Instructions for Getting Started
 
 You can use these by cloning the repo and importing into your Postman Application OR with the buttons below.
 
@@ -29,6 +29,10 @@ All other sublevels of the collection should have all set to "Inherit auth from 
 
 You can now run the collections by changing the relevant key value pairs. Be sure to consult the documentation for which ones are required and which ones you can delete as well as information about what each key value pair is for. 
 
+### Messages
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11b2a979fa10c6564f77)
+
 ### Lookups
 
 Our Lookups API provides a simple way to keep your database clean. It accesses mobile carrier information about any mobile number, in real-time, anywhere in the world.
@@ -38,10 +42,6 @@ To learn more about the benefits of using the Lookups API, visit our [product pa
 In the collection update the headers with your parameters. Enter your phone number, and one or more of the lookup type. You can use "carrier, type" together or individually (seperate with a comma). Option "hlr" can only be used individually.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7dbb0007cff1630317b5)
-
-### Messages
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/11b2a979fa10c6564f77)
 
 ### Webhooks Management
 
