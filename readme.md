@@ -1,7 +1,7 @@
 
 # Postman Collections
 
-This repo contains full postman collections for most of the MM APIs. This will be added to over time.
+This repo contains full postman collections for most of the MessageMedia APIs. This will be added to over time.
 
 ## Instructions
 
@@ -33,7 +33,7 @@ You can now run the collections by changing the relevant key value pairs. Be sur
 
 Our Lookups API provides a simple way to keep your database clean. It accesses mobile carrier information about any mobile number, in real-time, anywhere in the world.
 
-To learn more about the benefits of using the Lookups API, visit our product page.
+To learn more about the benefits of using the Lookups API, visit our [product page](https://www.messagemedia.com/au/feature/lookups/).
 
 In the collection update the headers with your parameters. Enter your phone number, and one or more of the lookup type. You can use "carrier, type" together or individually (seperate with a comma). Option "hlr" can only be used individually.
 
