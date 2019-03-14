@@ -43,6 +43,20 @@ In the collection update the headers with your parameters. Enter your phone numb
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7dbb0007cff1630317b5)
 
+### Short URLs Reportin
+
+Short URLs is a feature available to REST API users whereby 
+it automatically and seamlessly shortens any URL to just 
+22 characters. Every shortened URL is unique to every recipient.
+
+The reporting API has endpoints specific to the 
+this feature, allowing users to obtain details regarding 
+the number of click throughs on each URL.
+
+To learn more about the benefits of the short URLs feature, [visit our product page](https://messagemedia.com/nz/feature/short-urls/).
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6183fd2040995b67332b)
+
 ### Webhooks Management
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/4484dfbb1fef44e53094)
