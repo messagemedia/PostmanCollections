@@ -43,17 +43,17 @@ In the collection update the headers with your parameters. Enter your phone numb
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7dbb0007cff1630317b5)
 
-### Short URLs Reportin
+### Short Trackable Links
 
-Short URLs is a feature available to REST API users whereby 
-it automatically and seamlessly shortens any URL to just 
-22 characters. Every shortened URL is unique to every recipient.
+Short Trackable Links is a feature available to [Messaging API](https://developers.messagemedia.com/code/messages-api-documentation/) users whereby it automatically and seamlessly shortens any URL to just 22 characters. Every shortened URL is unique to each recipient.
 
-The reporting API has endpoints specific to the 
+The reporting API has endpoints specific to 
 this feature, allowing users to obtain details regarding 
-the number of click throughs on each URL.
+the number of click-throughs on each URL.
 
-To learn more about the benefits of the short URLs feature, [visit our product page](https://messagemedia.com/nz/feature/short-urls/).
+To enable this feature on your account, contact your account manager or contact support on [support@messagemedia.com](support@messagemedia.com).
+
+To learn more about the benefits of the Short Trackable Links feature, [visit our feature page](https://messagemedia.com/au/feature/short-urls/).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6183fd2040995b67332b)
 
